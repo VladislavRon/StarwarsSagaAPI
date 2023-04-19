@@ -7,7 +7,6 @@ let isDetailsSectionRendered = true;
 let isAsideSectionRendered;
 
 
-
 window.addEventListener('load', ()=>{
     if(localStorage.getItem('currentPage')){
         let num = localStorage.getItem('currentPage')
@@ -23,12 +22,11 @@ left_button.addEventListener('click', leftClick);
 buttonClose.addEventListener('click', openDiv);
 
 
-//https://loading.io/mod/spinner/atom/index.svg
+
 function changeColor() {
     //проверка цвета кнопок
     let previousPage = localStorage.getItem('previousPage');
     let nextPage = localStorage.getItem('nextPage');
-    //console.log(previousPage, nextPage)
     if (nextPage == 'null') {
         right_button.style.cssText = `background-image: url("https://i.ibb.co/ccfPvpP/arrow.png");`;
         left_button.style.cssText = `background-image: url("https://i.ibb.co/yfPWYNv/arrow1.png");`;
@@ -63,7 +61,7 @@ function loadPeople(url) {
                         localStorage.setItem('nextPage', data.next);
                         changeColor()
                         renderAside(data);
-                        console.log(data);
+                        //console.log(data);
                     });
             }
         )
@@ -74,31 +72,28 @@ function loadPeople(url) {
 }
 
 
-function rightClick() {
+async function rightClick() {
+    let url = localStorage.getItem('nextPage');
+    if (url !== 'null') {
+        await cleaningAsideDivs();
+        !isAsideSectionRendered && loadPeople(url);
+    }
     let num = +localStorage.getItem('currentPage')+1;
     let str = num.toString();
     localStorage.setItem('currentPage', num<9 ? str : '9');
-    let url = localStorage.getItem('nextPage');
-    if (url !== 'null') {
-        cleaningAsideDivs()
-        if (!isAsideSectionRendered) {
-            loadPeople(url);
-        }
-    }
 
 }
 
-function leftClick() {
+async function leftClick() {
+    let url = localStorage.getItem('previousPage');
+    if (url !== 'null') {
+        await cleaningAsideDivs();
+        !isAsideSectionRendered &&  loadPeople(url);
+    }
+    
     let num = +localStorage.getItem('currentPage')-1;
     let str = num.toString();
     localStorage.setItem('currentPage', num>0 ? str : '1');
-    let url = localStorage.getItem('previousPage');
-    if (url !== 'null') {
-        cleaningAsideDivs()
-        if (!isAsideSectionRendered) {
-            loadPeople(url);
-        }
-    }
 }
 
 
@@ -268,7 +263,6 @@ function changeButtonFont() {
         elem.classList.toggle('colored')
     }
 }
-
 
 
 
