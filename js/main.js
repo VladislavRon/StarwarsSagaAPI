@@ -41,6 +41,7 @@ function changeColor() {
 }
 
 async function loadPeople(url) {
+    //add preloader gif
     asideComponents.style.cssText = `
         width: 250px;
         height: 250px;
@@ -146,6 +147,7 @@ function renderAside(data) {
     } 
 
     isAsideSectionRendered = true;
+    //remove preloader gif
     asideComponents.style.cssText = '';
 
 }
