@@ -7,6 +7,7 @@ let isDetailsSectionRendered = true;
 let isAsideSectionRendered;
 
 
+
 window.addEventListener('load', ()=>{
     if(localStorage.getItem('currentPage')){
         let num = localStorage.getItem('currentPage')
@@ -39,7 +40,7 @@ function changeColor() {
     }
 }
 
-function loadPeople(url) {
+async function loadPeople(url) {
     asideComponents.style.cssText = `
         width: 250px;
         height: 250px;
@@ -47,30 +48,48 @@ function loadPeople(url) {
         background-image: url("https://i.gifer.com/origin/b4/b4d657e7ef262b88eb5f7ac021edda87.gif");
         background-repeat: no-repeat;
         background-position: 50% 50%;`;
-    fetch(url)
-        .then(
-            function (response) {
-                if (response.status !== 200) {
-                    console.log('Looks like there was a problem. Status Code: ' + response.status);
-                    return;
-                }
 
-                response.json()
-                    .then(function (data) {
-                        localStorage.setItem('previousPage', data.previous);
-                        localStorage.setItem('nextPage', data.next);
-                        changeColor()
-                        renderAside(data);
-                        //console.log(data);
-                    });
-            }
-        )
-        .catch(function (err) {
-            console.error('Fetch Error', err);
-        });
+    try{
+        const response = await fetch(url);
+        if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' + response.status);
+            return;
+        }
+        const data = await response.json();
+        localStorage.setItem('previousPage', data.previous);
+        localStorage.setItem('nextPage', data.next);
+        changeColor()
+        renderAside(data);
+        //console.log(data);
+    }catch(err){
+        console.error('Fetch Error', err);
+    }
+
+  
+    // fetch(url)
+    //     .then(
+    //         function (response) {
+    //             if (response.status !== 200) {
+    //                 console.log('Looks like there was a problem. Status Code: ' + response.status);
+    //                 return;
+    //             }
+    //
+    //             response.json()
+    //                 .then(function (data) {
+    //                     localStorage.setItem('previousPage', data.previous);
+    //                     localStorage.setItem('nextPage', data.next);
+    //                     changeColor()
+    //                     renderAside(data);
+    //                     //console.log(data);
+    //                 });
+    //         }
+    //     )
+    //     .catch(function (err) {
+    //         console.error('Fetch Error', err);
+    //     });
+
 
 }
-
 
 async function rightClick() {
     let url = localStorage.getItem('nextPage');
@@ -263,10 +282,5 @@ function changeButtonFont() {
         elem.classList.toggle('colored')
     }
 }
-
-
-
-
-
 
 
