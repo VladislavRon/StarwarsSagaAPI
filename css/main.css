@@ -251,6 +251,10 @@ footer{
     top:1px;
 }
 
+#name_td{
+    color: gold; font-size: 28px;
+}
+
 /*-----footer-----*/
 
 .footer__container{
@@ -399,6 +403,9 @@ footer{
     .main__table_container td:nth-child(4) ul li{
         font-size: 14px;
     }
+    #name_td{
+         font-size: 16px;
+    }
 
     .elementClose {
         height: 70px;
@@ -408,3 +415,4 @@ footer{
     }
 
 }
+
