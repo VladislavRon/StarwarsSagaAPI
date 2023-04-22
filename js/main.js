@@ -3,6 +3,7 @@ const left_button = document.querySelector('#left_button');
 const asideComponents = document.querySelector('#aside__components');
 const tableComponents = document.querySelector('#table');
 const buttonClose = document.querySelector('#buttonClose');
+//проверка на наличие кнопок и таблицы
 let isDetailsSectionRendered = true;
 let isAsideSectionRendered;
 
@@ -18,6 +19,7 @@ window.addEventListener('load', ()=>{
         loadPeople('https://swapi.dev/api/people/');
     }
 });
+
 right_button.addEventListener('click', rightClick);
 left_button.addEventListener('click', leftClick);
 buttonClose.addEventListener('click', openDiv);
@@ -120,7 +122,7 @@ async function leftClick() {
 function renderAside(data) {
     if (!isAsideSectionRendered) {
         for (let elem of data.results) {
-            //обертка для переворота
+            //обертка для переворота кнопок с героями
             let cardDiv = document.createElement('div'),
                 cardFaceDiv = document.createElement('div'),
                 cardBackDiv = document.createElement('div');
@@ -232,6 +234,7 @@ function renderTable(event, asideBtns) {
         }
 
     }
+    
     tableComponents.append(newTr);
     right_button.hidden = true;
     left_button.hidden = true;
@@ -242,7 +245,6 @@ function renderTable(event, asideBtns) {
 function hidingDiv(event) {
     let currentElement = event.target;
     currentElement.parentElement.style.cssText = `transform: rotateY(180deg);`;
-    //asideComponents.style.cssText = `visibility: hidden;  opacity: 0;  transition: visibility 0s linear 2000ms, opacity 2000ms;`;
     buttonClose.style.display = 'block';
 }
 
@@ -255,7 +257,6 @@ function openDiv() {
 
     cleaningTheTable();
     changeButtonFont();
-    //asideComponents.style.cssText = `visibility: visible;  opacity: 1;  transition: visibility 0s linear 900ms, opacity 900ms;`;;
     buttonClose.style.display = 'none';
     right_button.hidden = false;
     left_button.hidden = false;
