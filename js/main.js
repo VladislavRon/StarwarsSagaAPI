@@ -167,6 +167,7 @@ function renderTable(event, asideBtns) {
         switch (i) {
             case 1:
                 newTd.innerHTML = asideBtns.name;
+                newTd.style.cssText = `color: gold); font-size: 28px;`;
                 newTr.append(newTd);
                 break;
 
